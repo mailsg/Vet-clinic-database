@@ -20,3 +20,11 @@ ALTER TABLE owners ADD CONSTRAINT owners_pkey PRIMARY KEY(id);
 ALTER TABLE animals DROP COLUMN species;
 ALTER TABLE animals ADD species_id INT, ADD CONSTRAINT fk_species FOREIGN KEY(species_id) REFERENCES species(id) ON DELETE CASCADE;
 ALTER TABLE animals ADD owner_id INT, ADD CONSTRAINT fk_owners FOREIGN KEY(owner_id) REFERENCES owners(id) ON DELETE CASCADE;
+
+/* Adding tables for demonstating many to many and one to many relationships - day 4 */
+
+CREATE TABLE vets(id SERIAL PRIMARY KEY, name VARCHAR(50), age INT, date_of_graduation DATE);
+
+CREATE TABLE specializations(vet_id INT REFERENCES vets(id), species_id INT REFERENCES species(id), PRIMARY KEY(vet_id, species_id));
+
+CREATE TABLE visits(animal_id REFERENCES animals(id), vet_id INT REFERENCES vets(id), date_of_visit DATE);
